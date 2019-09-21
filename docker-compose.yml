@@ -1,7 +1,7 @@
 version: "2"
 services:
   burrow:
-    build: .
+    image: burrow
     volumes:
       - ${PWD}/docker-config:/etc/burrow/
       - ${PWD}/tmp:/var/tmp/burrow

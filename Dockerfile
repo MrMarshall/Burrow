@@ -1,13 +1,12 @@
-FROM golang:1.12-alpine as builder
+FROM golang:1.12 as builder
 
 ENV BURROW_SRC /usr/src/Burrow/
 
-RUN apk add --no-cache git curl gcc libc-dev
 ADD . $BURROW_SRC
 WORKDIR $BURROW_SRC
-RUN go mod tidy && go build -o /tmp/burrow .
+RUN go mod tidy && GOOS=linux GOARCH=386 go build -ldflags="-w -s" -o /tmp/burrow .
 
-FROM iron/go
+FROM alpine
 LABEL maintainer="LinkedIn Burrow https://github.com/linkedin/Burrow"
 
 WORKDIR /app
